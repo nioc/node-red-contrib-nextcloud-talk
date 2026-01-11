@@ -1,0 +1,152 @@
+[
+  {
+    "id": "8879162baa41f29c",
+    "type": "tab",
+    "label": "Example Talk",
+    "disabled": false,
+    "info": "",
+    "env": []
+  },
+  {
+    "id": "a7905e8ce3ddaf02",
+    "type": "inject",
+    "z": "8879162baa41f29c",
+    "name": "",
+    "props": [
+      {
+        "p": "message",
+        "v": "Hello",
+        "vt": "str"
+      },
+      {
+        "p": "token",
+        "v": "56n60m91",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "x": 450,
+    "y": 160,
+    "wires": [
+      [
+        "f7d28ec1a85a04a7"
+      ]
+    ]
+  },
+  {
+    "id": "d307315b46607c50",
+    "type": "debug",
+    "z": "8879162baa41f29c",
+    "name": "Result",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 790,
+    "y": 140,
+    "wires": []
+  },
+  {
+    "id": "a37e6b4d671e6bf5",
+    "type": "debug",
+    "z": "8879162baa41f29c",
+    "name": "Error",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 790,
+    "y": 180,
+    "wires": []
+  },
+  {
+    "id": "f7d28ec1a85a04a7",
+    "type": "nextcloud-talk-send",
+    "z": "8879162baa41f29c",
+    "name": "Send",
+    "bot": "f982872ed8cdd179",
+    "token": "",
+    "message": "",
+    "x": 610,
+    "y": 160,
+    "wires": [
+      [
+        "d307315b46607c50"
+      ],
+      [
+        "a37e6b4d671e6bf5"
+      ]
+    ]
+  },
+  {
+    "id": "eea7598c06e7c57c",
+    "type": "nextcloud-talk-webhook",
+    "z": "8879162baa41f29c",
+    "name": "",
+    "bot": "f982872ed8cdd179",
+    "url": "/talk",
+    "verify": true,
+    "x": 490,
+    "y": 280,
+    "wires": [
+      [
+        "6d37a0d5c0ab0757"
+      ],
+      [
+        "49cd096cd7e4977e"
+      ]
+    ]
+  },
+  {
+    "id": "6d37a0d5c0ab0757",
+    "type": "debug",
+    "z": "8879162baa41f29c",
+    "name": "webhook ok",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 710,
+    "y": 260,
+    "wires": []
+  },
+  {
+    "id": "49cd096cd7e4977e",
+    "type": "debug",
+    "z": "8879162baa41f29c",
+    "name": "webhook error",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 720,
+    "y": 300,
+    "wires": []
+  },
+  {
+    "id": "f982872ed8cdd179",
+    "type": "nextcloud-talk-bot",
+    "name": "Example",
+    "endpoint": "https://nextcloud.domain.ltd"
+  }
+]
