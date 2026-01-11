@@ -1,0 +1,42 @@
+{
+  "name": "node-red-contrib-nextcloud-talk",
+  "version": "1.0.0",
+  "description": "Nextcloud Talk connector for Node-RED",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint . --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "node-red",
+    "nextcloud",
+    "talk"
+  ],
+  "author": "nioc <dev@nioc.eu>",
+  "license": "LGPL-3.0-or-later",
+  "homepage": "https://github.com/nioc/node-red-contrib-nextcloud-talk",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nioc/node-red-contrib-nextcloud-talk.git"
+  },
+  "bugs": "https://github.com/nioc/node-red-contrib-nextcloud-talk/issues",
+  "node-red": {
+    "version": ">=4.0.0",
+    "nodes": {
+      "nextcloud-talk": "lib/nextcloud-talk-node.js"
+    }
+  },
+  "packageManager": "pnpm@10.24.0",
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-html": "^7.1.0",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.6.0",
+    "eslint-plugin-security": "^1.7.1"
+  }
+}

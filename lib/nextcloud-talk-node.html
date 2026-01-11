@@ -1,0 +1,202 @@
+<!--  nextcloud-talk-bot config -->
+<script type="text/javascript">
+  RED.nodes.registerType('nextcloud-talk-bot', {
+    category: 'config',
+    color: '#8ec7e7',
+    credentials: {
+      secret: {
+        value: '',
+        type: 'password',
+      },
+    },
+    defaults: {
+      name: {
+        value: 'Nextcloud talk bot',
+        required: true,
+      },
+      endpoint: {
+        value: '',
+        required: true,
+        validate: RED.validators.regex(/https?:\/\/[a-z0-9\/:%_+.,#?!@&=-]+/),
+      },
+    },
+    label: function () {
+      return this.name || 'Nextcloud talk bot'
+    },
+  })
+</script>
+
+<script type="text/html" data-template-name="nextcloud-talk-bot">
+  <div class="form-row">
+    <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-config-input-name">
+  </div>
+  <hr/>
+  <div class="form-row" title="Nextcloud endpoint">
+    <label for="node-config-input-endpoint"><i class="fa fa-globe"></i> Endpoint</label>
+    <input type="url" id="node-config-input-endpoint" placeholder="https://nextcloud.example.tld">
+  </div>
+  <div class="form-row" title="Bot secret">
+    <label for="node-config-input-secret"><i class="fa fa-lock"></i> Secret</label>
+    <input type="password" id="node-config-input-secret">
+  </div>
+</script>
+
+<script type="text/html" data-help-name="nextcloud-talk-bot">
+  <p>Configure Nextcloud talk bot</p>
+  <h3>Inputs</h3>
+  <dl class="message-properties">
+    <dt>endpoint<span class="property-type">string</span></dt>
+    <dd>Nextcloud server URL.</dd>
+  </dl>
+  <dl class="message-properties">
+    <dt>secret<span class="property-type">string</span></dt>
+    <dd>Secret of the bot used to sign messages (HMAC256).</dd>
+  </dl>
+  <h3>References</h3>
+  <ul>
+    <li><a href="https://nextcloud-talk.readthedocs.io/en/latest/bots/" target="_blank" rel="noopener noreferrer">Nextcloud talk docs</a> - full description of Talk bot.</li>
+    <li><a href="https://github.com/nioc/node-red-contrib-nextcloud-talk" target="_blank" rel="noopener noreferrer">Node homepage</a> - doc, issues and releases.</li>
+  </ul>
+</script>
+
+<!--  nextcloud-talk-send -->
+<script type="text/javascript">
+  RED.nodes.registerType('nextcloud-talk-send', {
+    category: 'Nextcloud Talk',
+    paletteLabel: 'Send',
+    icon: 'talk-icon-rounded.svg',
+    color: '#8ec7e7',
+    defaults: {
+      name: {
+        value: 'Send',
+      },
+      bot: {
+        type: 'nextcloud-talk-bot',
+        required: true,
+      },
+      token: {
+        value: '',
+        required: false,
+      },
+      message: {
+        value: '',
+        required: false,
+      },
+    },
+    inputs: 1,
+    outputs: 2,
+    outputLabels: ['success', 'reject'],
+    label: function () {
+      return this.name || 'Nextcloud Talk'
+    },
+  })
+</script>
+
+<script type="text/html" data-template-name="nextcloud-talk-send">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Nextcloud Talk">
+  </div>
+  <hr/>
+  <div class="form-row">
+    <label for="node-input-bot"><i class="fa fa-cog"></i> Talk bot</label>
+    <input type="text" id="node-input-bot">
+  </div>
+  <div class="form-row" title="Room token">
+    <label for="node-input-token"><i class="fa fa-users"></i> Room</label>
+    <input type="text" id="node-input-token">
+  </div>
+  <div class="form-row" title="Message">
+    <label for="node-input-message"><i class="fa fa-comment"></i> Message</label>
+    <input type="text" id="node-input-message" placeholder="Hello">
+  </div>
+</script>
+
+<script type="text/html" data-help-name="nextcloud-talk-send">
+  <p>Sending a chat message.</p>
+  <h3>Inputs</h3>
+  <dl class="message-properties">
+    <dt class="optional">token<span class="property-type">string</span></dt>
+    <dd>If it is not configured in the node, this optional property defines the token for the Nextcloud talk room where the message should be sent.</dd>
+    <dt class="optional">message<span class="property-type">string</span></dt>
+    <dd>If it is not configured in the node, this optional property defines the content of the message to be sent in the Nextcloud talk room.</dd>
+  </dl>
+  <h3>Outputs</h3>
+  <dl class="message-properties">
+    <dt class="optional">payload<span class="property-type">object</span></dt>
+    <dd>Nextcloud Talk response in case of success.</dd>
+    <dt class="optional">error<span class="property-type">object</span></dt>
+    <dd>Error encountered, if applicable.</dd>
+  </dl>
+</script>
+
+<!--  nextcloud-talk-webhook -->
+<script type="text/javascript">
+  RED.nodes.registerType('nextcloud-talk-webhook', {
+    category: 'Nextcloud Talk',
+    paletteLabel: 'Listen',
+    icon: 'talk-icon-rounded.svg',
+    color: '#8ec7e7',
+    defaults: {
+      name: {
+        value: '',
+      },
+      bot: {
+        type: 'nextcloud-talk-bot',
+        required: true,
+      },
+      url: {
+        value: '',
+        required: true,
+      },
+      verify: {
+        value: true,
+      },
+    },
+    inputs: 0,
+    outputs: 2,
+    outputLabels: ['message', 'error'],
+    label: function () {
+      return this.name || this.url || 'Listen'
+    },
+  })
+</script>
+
+<script type="text/html" data-template-name="nextcloud-talk-webhook">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Nextcloud Talk">
+  </div>
+  <hr/>
+  <div class="form-row">
+    <label for="node-input-bot"><i class="fa fa-cog"></i> Talk bot</label>
+    <input type="text" id="node-input-bot">
+  </div>
+  <div class="form-row" title="Webhook URL">
+    <label for="node-input-url"><i class="fa fa-globe"></i> URL</label>
+    <input type="text" id="node-input-url" placeholder="/talk">
+  </div>
+  <div class="form-row" title="Verify message signature">
+    <label for="node-input-verify"><i class="fa fa-shield"></i> Verify</label>
+    <input type="checkbox" id="node-input-verify" style="display: inline-block; width: auto; vertical-align: top;">
+  </div>
+</script>
+
+<script type="text/html" data-help-name="nextcloud-talk-webhook">
+  <p>Listening to messages sent in the chat room.</p>
+  <h3>Config</h3>
+  <dl class="message-properties">
+    <dt>url<span class="property-type">string</span></dt>
+    <dd>URL of the webhook that the Nextcloud Talk bot will use to notify messages  (example: <code>/talk</code>).</dd>
+    <dt>verify<span class="property-type">boolean</span></dt>
+    <dd>Checks whether or not the message signature is valid. It is highly recommended to leave this box checked.</dd>
+  </dl>
+  <h3>Outputs</h3>
+  <dl class="message-properties">
+    <dt class="optional">payload<span class="property-type">object</span></dt>
+    <dd>Nextcloud Talk message.</dd>
+    <dt class="optional">error<span class="property-type">object</span></dt>
+    <dd>Error encountered, if applicable.</dd>
+  </dl>
+</script>

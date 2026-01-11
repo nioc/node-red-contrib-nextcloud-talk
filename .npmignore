@@ -1,0 +1,3 @@
+.eslintrc.json
+.github/workflows/
+node-red-contrib-nextcloud-talk-*.tgz
